@@ -1,8 +1,8 @@
 
 
-package model.product;
+package org.skypro.skyshop.model.product;
 
-import model.search.Searchable;
+import org.skypro.skyshop.model.search.Searchable;
 
 import java.util.UUID;
 
