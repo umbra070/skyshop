@@ -5,19 +5,18 @@ import org.skypro.skyshop.model.product.DiscountProduct;
 import org.skypro.skyshop.model.product.FixPriceProduct;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.product.SimpleProduct;
+import org.skypro.skyshop.model.search.SearchResalt;
 import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
 public class StorageService {
-    private Map<UUID, Searchable> articles;
-    private Map<UUID, Searchable> products;
+    private Map<UUID, Article> articles;
+    private Map<UUID, Product> products;
 
     public StorageService(){
         articles = new HashMap<>();
@@ -26,12 +25,20 @@ public class StorageService {
         tempSetProducts();
     }
 
-    public Map<UUID, Searchable> getArticles(){
+    public Map<UUID, Article> getArticles(){
         return articles;
     }
 
-    public Map<UUID, Searchable> getProducts(){
+    public Map<UUID, Product> getProducts(){
         return products;
+    }
+
+    public Set<SearchResalt> search(String searchString){
+        Set<SearchResalt> result= new HashSet<>();
+        getAllContent().values().stream()
+                .filter(s -> s.getSearchTerm().contains(searchString))
+                .forEach(s -> result.add(SearchResalt.fromSearchable(s)));
+        return result;
     }
 
     private void tempSetProducts(){
@@ -52,10 +59,9 @@ public class StorageService {
 
     public Map<UUID, Searchable> getAllContent(){
         Map<UUID, Searchable> allContent = new HashMap<>();
-        allContent.putAll(articles
-                .putAll(products));
-        return allContent.values().stream()
-                .collect(articles);
+        allContent.putAll(products);
+        allContent.putAll(articles);
+        return allContent;
     }
 
     private void tempSetArticles(){
