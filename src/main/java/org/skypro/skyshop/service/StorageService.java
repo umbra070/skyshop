@@ -1,15 +1,14 @@
-package service;
+package org.skypro.skyshop.service;
 
-import model.article.Article;
-import model.product.DiscountProduct;
-import model.product.FixPriceProduct;
-import model.product.Product;
-import model.product.SimpleProduct;
+import org.skypro.skyshop.model.article.Article;
+import org.skypro.skyshop.model.product.DiscountProduct;
+import org.skypro.skyshop.model.product.FixPriceProduct;
+import org.skypro.skyshop.model.product.Product;
+import org.skypro.skyshop.model.product.SimpleProduct;
+import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class StorageService {
@@ -19,6 +18,8 @@ public class StorageService {
     public StorageService(){
         articles = new HashMap<>();
         products = new HashMap<>();
+        tempSetArticles();
+        tempSetProducts();
     }
 
     public Map<UUID, Article> getArticles(){
@@ -43,6 +44,13 @@ public class StorageService {
         products.put(product4.getId(), product4);
         products.put(product5.getId(), product5);
         products.put(product6.getId(), product6);
+    }
+
+    public Set<Searchable> getAllContent(){
+        Set<Searchable> allContent = new HashSet<>();
+        allContent.addAll(products.values());
+        allContent.addAll(articles.values());
+        return allContent;
     }
 
     private void tempSetArticles(){
