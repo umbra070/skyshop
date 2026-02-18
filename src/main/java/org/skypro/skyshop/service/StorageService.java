@@ -5,18 +5,15 @@ import org.skypro.skyshop.model.product.DiscountProduct;
 import org.skypro.skyshop.model.product.FixPriceProduct;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.product.SimpleProduct;
-import org.skypro.skyshop.model.search.SearchResalt;
 import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class StorageService {
-    private Map<UUID, Article> articles;
-    private Map<UUID, Product> products;
+    private final Map<UUID, Article> articles;
+    private final Map<UUID, Product> products;
 
     public StorageService(){
         articles = new HashMap<>();
@@ -31,14 +28,6 @@ public class StorageService {
 
     public Map<UUID, Product> getProducts(){
         return products;
-    }
-
-    public Set<SearchResalt> search(String searchString){
-        Set<SearchResalt> result= new HashSet<>();
-        getAllContent().values().stream()
-                .filter(s -> s.getSearchTerm().contains(searchString))
-                .forEach(s -> result.add(SearchResalt.fromSearchable(s)));
-        return result;
     }
 
     private void tempSetProducts(){
@@ -57,10 +46,10 @@ public class StorageService {
         products.put(product6.getId(), product6);
     }
 
-    public Map<UUID, Searchable> getAllContent(){
-        Map<UUID, Searchable> allContent = new HashMap<>();
-        allContent.putAll(products);
-        allContent.putAll(articles);
+    public Set<Searchable> getAllContent(){
+        Set<Searchable> allContent = new HashSet<>();
+        allContent.addAll(products.values());
+        allContent.addAll(articles.values());
         return allContent;
     }
 
