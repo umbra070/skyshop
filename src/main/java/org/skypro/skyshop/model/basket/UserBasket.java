@@ -7,10 +7,18 @@ public class UserBasket {
     private final Set<BasketItem> items = new HashSet<>();
     private final Integer totalPrice;
 
-    public UserBasket(Set<BasketItem> items){
+    public UserBasket(Set<BasketItem> items) {
         this.items.addAll(items);
         totalPrice = items.stream()
                 .mapToInt(p -> p.getProduct().getProductPrice())
                 .sum();
+    }
+
+    public Set<BasketItem> getItems() {
+        return items;
+    }
+
+    public Integer getTotalPrice() {
+        return totalPrice;
     }
 }

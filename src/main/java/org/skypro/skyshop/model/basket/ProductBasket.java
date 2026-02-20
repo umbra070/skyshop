@@ -20,7 +20,7 @@ public class ProductBasket {
         }
     }
 
-    public Map<UUID, Integer> getBasket(){
+    public Map<UUID, Integer> getBasket() {
         return Collections.unmodifiableMap(basket);
     }
 }

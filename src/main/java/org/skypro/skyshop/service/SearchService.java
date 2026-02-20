@@ -12,14 +12,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class SearchService {
-    private final StorageService storage;
+    private final StorageService storageService;
 
-    public SearchService(){
-        storage = new StorageService();
+    public SearchService(StorageService storageService) {
+        this.storageService = storageService;
     }
 
-    public Set<SearchResult> search(String searchString){
-        return storage.getAllContent().stream()
+    public Set<SearchResult> search(String searchString) {
+        return storageService.getAllContent().stream()
                 .filter(s -> s.getSearchTerm().contains(searchString))
                 .map(SearchResult::fromSearchable)
                 .collect(Collectors.toCollection(() -> new TreeSet<>(new ComparatorSearchResultByNameABC())));
