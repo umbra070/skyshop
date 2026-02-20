@@ -1,35 +1,40 @@
-package service;
+package org.skypro.skyshop.service;
 
-import model.article.Article;
-import model.product.DiscountProduct;
-import model.product.FixPriceProduct;
-import model.product.Product;
-import model.product.SimpleProduct;
+import org.skypro.skyshop.model.article.Article;
+import org.skypro.skyshop.model.product.DiscountProduct;
+import org.skypro.skyshop.model.product.FixPriceProduct;
+import org.skypro.skyshop.model.product.Product;
+import org.skypro.skyshop.model.product.SimpleProduct;
+import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class StorageService {
     private final Map<UUID, Article> articles;
     private final Map<UUID, Product> products;
 
-    public StorageService(){
+    public StorageService() {
         articles = new HashMap<>();
         products = new HashMap<>();
+        tempSetArticles();
+        tempSetProducts();
     }
 
-    public Map<UUID, Article> getArticles(){
+    public Map<UUID, Article> getArticles() {
         return articles;
     }
 
-    public Map<UUID, Product> getProducts(){
+    public Map<UUID, Product> getProducts() {
         return products;
     }
 
-    private void tempSetProducts(){
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(products.get(id));
+    }
+
+    private void tempSetProducts() {
         SimpleProduct product1 = new SimpleProduct("Samsung Galaxy S22+", 50000, UUID.randomUUID());
         DiscountProduct product2 = new DiscountProduct("Чехол для Samsung Galaxy S22+", 5000, 40, UUID.randomUUID());
         FixPriceProduct product3 = new FixPriceProduct("Беспроводное зарядное устройство Samsung BXH2890", UUID.randomUUID());
@@ -45,7 +50,14 @@ public class StorageService {
         products.put(product6.getId(), product6);
     }
 
-    private void tempSetArticles(){
+    public Set<Searchable> getAllContent() {
+        Set<Searchable> allContent = new HashSet<>();
+        allContent.addAll(products.values());
+        allContent.addAll(articles.values());
+        return allContent;
+    }
+
+    private void tempSetArticles() {
         Article article1 = new Article("iPhone 16 Plus: кратко о главном", "iPhone 16 Plus получил обновлённый дизайн с алюминиевой рамкой и керамическим стеклом, которое в два раза устойчивее к царапинам, чем у конкурентов.\n" +
                 "\n" +
                 "Устройство оснащено мощным процессором Apple A18 на 3 нм техпроцессе, обеспечивающим на 30 % более высокую производительность CPU и на 40 % — графического ускорителя по сравнению с предыдущим поколением.\n" +
