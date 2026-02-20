@@ -1,5 +1,7 @@
 package org.skypro.skyshop.model.search;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class SearchResult {
     private final String id;
     private final String name;
@@ -11,13 +13,16 @@ public class SearchResult {
         this.contentType = contentType;
     }
 
+    @JsonIgnore
     public String getId(){
         return id;
     }
+
     public String getName(){
         return name;
     }
 
+    @JsonIgnore
     public String getContentType(){
         return contentType;
     }

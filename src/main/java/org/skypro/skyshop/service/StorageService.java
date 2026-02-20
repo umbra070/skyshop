@@ -30,6 +30,10 @@ public class StorageService {
         return products;
     }
 
+    public Optional<Product> getProductById(UUID id){
+        return Optional.ofNullable(products.get(id));
+    }
+
     private void tempSetProducts(){
         SimpleProduct product1 = new SimpleProduct("Samsung Galaxy S22+", 50000, UUID.randomUUID());
         DiscountProduct product2 = new DiscountProduct("Чехол для Samsung Galaxy S22+", 5000, 40, UUID.randomUUID());
