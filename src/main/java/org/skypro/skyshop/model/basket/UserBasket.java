@@ -10,7 +10,7 @@ public class UserBasket {
     public UserBasket(Set<BasketItem> items) {
         this.items.addAll(items);
         totalPrice = items.stream()
-                .mapToInt(p -> p.getProduct().getProductPrice())
+                .mapToInt(bi -> bi.getProduct().getProductPrice()*bi.getCount())
                 .sum();
     }
 

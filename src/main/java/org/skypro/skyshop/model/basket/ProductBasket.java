@@ -13,11 +13,8 @@ public class ProductBasket {
     }
 
     public void setProductInBasket(UUID id) {
-        if (basket.containsKey(id)) {
-            basket.put(id, basket.get(id) + 1);
-        } else {
-            basket.put(id, 1);
-        }
+        basket.putIfAbsent(id, 1);
+        basket.computeIfPresent(id, (uuid, i) -> i + 1);
     }
 
     public Map<UUID, Integer> getBasket() {

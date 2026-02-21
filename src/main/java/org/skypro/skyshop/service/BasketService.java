@@ -5,6 +5,7 @@ import org.skypro.skyshop.model.basket.BasketItem;
 import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.basket.UserBasket;
 import org.skypro.skyshop.model.product.Product;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Component
 @SessionScope
 public class BasketService {
     private final ProductBasket basket;
