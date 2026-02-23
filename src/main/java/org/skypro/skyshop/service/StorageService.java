@@ -22,6 +22,11 @@ public class StorageService {
         tempSetProducts();
     }
 
+    public StorageService(Map<UUID, Article> articles, Map<UUID, Product> products){
+        this.articles = articles;
+        this.products = products;
+    }
+
     public Map<UUID, Article> getArticles() {
         return articles;
     }
@@ -30,10 +35,23 @@ public class StorageService {
         return products;
     }
 
+
+    //Вот этот метод тестируем
+    //Возвращает товар по ID
     public Optional<Product> getProductById(UUID id) {
         return Optional.ofNullable(products.get(id));
     }
 
+    //И вот этот метод тестируем
+    //Возвращает коллекцию всех имеющихся статей и товаров
+    public Set<Searchable> getAllContent() {
+        Set<Searchable> allContent = new HashSet<>();
+        allContent.addAll(products.values());
+        allContent.addAll(articles.values());
+        return allContent;
+    }
+
+    //Временная затычка в качестве источника данных с товарами
     private void tempSetProducts() {
         SimpleProduct product1 = new SimpleProduct("Samsung Galaxy S22+", 50000, UUID.randomUUID());
         DiscountProduct product2 = new DiscountProduct("Чехол для Samsung Galaxy S22+", 5000, 40, UUID.randomUUID());
@@ -50,13 +68,7 @@ public class StorageService {
         products.put(product6.getId(), product6);
     }
 
-    public Set<Searchable> getAllContent() {
-        Set<Searchable> allContent = new HashSet<>();
-        allContent.addAll(products.values());
-        allContent.addAll(articles.values());
-        return allContent;
-    }
-
+    //Временная затычка в качестве источника данных со статьями
     private void tempSetArticles() {
         Article article1 = new Article("iPhone 16 Plus: кратко о главном", "iPhone 16 Plus получил обновлённый дизайн с алюминиевой рамкой и керамическим стеклом, которое в два раза устойчивее к царапинам, чем у конкурентов.\n" +
                 "\n" +
